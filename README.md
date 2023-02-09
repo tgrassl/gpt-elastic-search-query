@@ -4,26 +4,27 @@ This example shows how you can create elastic search queries with a LLM like GPT
 [Playground](https://platform.openai.com/playground/p/BHqy0KpwlWbZ9hhiaiQlVVNM?model=code-davinci-002)
 
 ## 1. Get available fields
-First we need to get all available fields in the index, e.g. `log.level, kubernetes.labels.service, trace.id, message, container.id`. These will be used later in the prompt.
-These could be fetched using the elastic search api.
+First we need to get all available fields in the index, e.g. `log.level, kubernetes.labels.service, trace.id, message, container.id`. 
+
+These could be fetched using the elastic search api and will be used later in the prompt.
 
 ## 2. Generate prompt
 Here's the base prompt that we are going to use:
 ```
 """
 Create a elastic search json query for the following text using the fields <<FIELDS>>. Only return the json and only use term instead of match.
-<<QUERY>>
+<<QUERY_PROMPT>>
 """
 ```
 
 `<<FIELDS>>` is replaced with the list of available fields.
 
-`<<QUERY>>` is the user query.
+`<<QUERY_PROMPT>>` is the input query prompt.
 
-`only use term instead of match` specifies if we want fuzzy or exact matching.
+`only use term instead of match` specifies if we want fuzzy (match) or exact (term) matching.
 
-## 3. Generate Completion
-Now we put everything together and create a elastic search query using natural language!
+## 3. Generate query
+Now we put it all together and create an elastic search query using natural language!
 
 Model: `code-davinci-002` or `text-davinci-003`
 
